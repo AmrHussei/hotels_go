@@ -20,6 +20,7 @@ class _HotelsSearchState extends State<HotelsSearch> {
   TextEditingController selectCityController = TextEditingController();
 
   DateTimeRange? selectedDateRange;
+  final int c = 1;
 
   Future<void> _selectDateRange(BuildContext context) async {
     final picked = await showDateRangePicker(
