@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,7 +21,6 @@ class _HotelsSearchState extends State<HotelsSearch> {
   TextEditingController selectCityController = TextEditingController();
 
   DateTimeRange? selectedDateRange;
-  final int c = 1;
 
   Future<void> _selectDateRange(BuildContext context) async {
     final picked = await showDateRangePicker(
@@ -221,6 +221,12 @@ void _showModalBottomSheet(BuildContext context) {
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(12.sp),
+        topRight: Radius.circular(12.sp),
+      ),
+    ),
     builder: (BuildContext context) {
       // Calculate the height of the modal as 90% of the screen height
 
@@ -241,16 +247,22 @@ class ShowButtomsheetBody extends StatefulWidget {
 class _ShowButtomsheetBodyState extends State<ShowButtomsheetBody> {
   List<TextEditingController> controllers = [];
 
-  int num = 2;
+  int roomsNum = 1;
+  int childrenNum = 2;
+  int adultsNum = 4;
+  bool switchValue = false;
 
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
 
-    double modalHeight = screenHeight * 0.85;
+    double modalHeight = screenHeight * 0.92;
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(18.sp),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(18.sp),
+          topRight: Radius.circular(18.sp),
+        ),
       ),
       height: modalHeight,
       child: ListView(
@@ -275,11 +287,11 @@ class _ShowButtomsheetBodyState extends State<ShowButtomsheetBody> {
                       ),
                     ],
                   ),
-                  child: const CounterRowWithText(text: 'Rooms'),
+                  child: CounterRowWithText(text: 'Rooms', number: roomsNum),
                 ),
                 16.verticalSpace,
                 Container(
-                  height: 300.h,
+                  // height: 300.h,
                   width: double.infinity,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8.sp),
@@ -294,6 +306,7 @@ class _ShowButtomsheetBodyState extends State<ShowButtomsheetBody> {
                     ],
                   ),
                   child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       12.verticalSpace,
                       Padding(
@@ -308,58 +321,175 @@ class _ShowButtomsheetBodyState extends State<ShowButtomsheetBody> {
                           ],
                         ),
                       ),
-                      16.verticalSpace,
-                      const CounterRowWithText(text: 'Adults'),
-                      16.verticalSpace,
-                      const CounterRowWithText(text: 'Children'),
-                      16.verticalSpace,
-                      Expanded(
-                        child: ListView.builder(
-                          itemCount: num,
-                          itemBuilder: (context, index) {
-                            for (var i = 0; i < num; i++) {
-                              controllers.add(TextEditingController());
-                            }
-                            return Padding(
-                              padding: EdgeInsets.only(
-                                  right: 16.w, left: 26.w, bottom: 16.h),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  TextUtils(
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.w400,
-                                    text: 'Age of child ${index + 1}',
-                                  ),
-                                  SizedBox(
-                                    height: 50.h,
-                                    width: 80.w,
-                                    child: TextFormFieldWidget(
-                                      onChanged: (value) {},
-                                      hint: '14 years',
-                                      keyboardType: TextInputType.number,
-                                      hintStyle: TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 16.sp,
-                                      ),
-                                      controller: controllers.length > num
-                                          ? controllers[num]
-                                          : null,
+                      12.verticalSpace,
+                      CounterRowWithText(text: 'Adults', number: adultsNum),
+                      12.verticalSpace,
+                      CounterRowWithText(text: 'Children', number: childrenNum),
+                      12.verticalSpace,
+                      Column(
+                          children: List.generate(
+                        childrenNum,
+                        (index) {
+                          for (var i = 0; i < childrenNum; i++) {
+                            controllers.add(TextEditingController());
+                          }
+                          return Padding(
+                            padding: EdgeInsets.only(
+                                right: 16.w, left: 26.w, bottom: 16.h),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                TextUtils(
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w400,
+                                  text: 'Age of child ${index + 1}',
+                                ),
+                                SizedBox(
+                                  height: 35.h,
+                                  width: 80.w,
+                                  child: TextFormFieldWidget(
+                                    onChanged: (value) {},
+                                    hint: '14 years',
+                                    keyboardType: TextInputType.number,
+                                    hintStyle: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 16.sp,
                                     ),
-                                  )
-                                ],
-                              ),
-                            );
-                          },
-                        ),
-                      )
+                                    controller: controllers.length > childrenNum
+                                        ? controllers[index]
+                                        : null,
+                                  ),
+                                )
+                              ],
+                            ),
+                          );
+                        },
+                      )),
                     ],
+                  ),
+                ),
+                16.verticalSpace,
+                Container(
+                  height: 60.h,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8.sp),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        spreadRadius: 2,
+                        blurRadius: 10,
+                        offset: const Offset(0, 0),
+                      ),
+                    ],
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 16.w,
+                      vertical: 10.h,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                TextUtils(
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w500,
+                                  text: 'pet-friendly',
+                                ),
+                                5.horizontalSpace,
+                                const Icon(Icons.info_outline)
+                              ],
+                            ),
+                            const Spacer(),
+                            TextUtils(
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w300,
+                              text: 'only show stays that allow pets',
+                            ),
+                          ],
+                        ),
+                        const Spacer(),
+                        Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            CupertinoSwitch(
+                              value: switchValue,
+                              activeColor: AppColors.primary,
+                              onChanged: (value) {
+                                setState(() {
+                                  switchValue = value;
+                                });
+                                // Add your logic for handling switch state changes.
+                              },
+                            ),
+                            if (!switchValue)
+                              Positioned(
+                                right: 8.w,
+                                child: InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      switchValue = !switchValue;
+                                    });
+                                  },
+                                  child: Container(
+                                    width: 10.w,
+                                    height: 10.w,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      border: Border(
+                                        top: BorderSide(
+                                          width: 1.w,
+                                          color: Colors.grey,
+                                        ),
+                                        bottom: BorderSide(
+                                          width: 1.w,
+                                          color: Colors.grey,
+                                        ),
+                                        left: BorderSide(
+                                          width: 1.w,
+                                          color: Colors.grey,
+                                        ),
+                                        right: BorderSide(
+                                          width: 1.w,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                      color: Colors
+                                          .transparent, // Customize the color of the circle
+                                    ),
+                                  ),
+                                ),
+                              ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                90.verticalSpace,
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      minimumSize: Size(
+                    double.infinity,
+                    45.h,
+                  )),
+                  onPressed: () {},
+                  child: TextUtils(
+                    color: Colors.white,
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w500,
+                    text: 'Apply',
                   ),
                 )
               ],
             ),
-          )
+          ),
         ],
       ),
     );
@@ -391,8 +521,10 @@ class CounterRowWithText extends StatelessWidget {
   const CounterRowWithText({
     super.key,
     required this.text,
+    required this.number,
   });
   final String text;
+  final int number;
 
   @override
   Widget build(BuildContext context) {
@@ -406,59 +538,89 @@ class CounterRowWithText extends StatelessWidget {
             text: text,
           ),
           const Spacer(),
-          const CounterWidget()
+          CounterWidget(
+            number: number,
+          )
         ],
       ),
     );
   }
 }
 
-class CounterWidget extends StatelessWidget {
-  const CounterWidget({
+class CounterWidget extends StatefulWidget {
+  CounterWidget({
     super.key,
+    required this.number,
   });
+  int number;
 
+  @override
+  State<CounterWidget> createState() => _CounterWidgetState();
+}
+
+class _CounterWidgetState extends State<CounterWidget> {
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            if (widget.number == 1) return;
+            setState(() {
+              widget.number--;
+            });
+          },
           style: ElevatedButton.styleFrom(
               elevation: 0,
-              minimumSize: Size(35.w, 35.h),
+              minimumSize: Size(25.w, 35.w),
               shape: RoundedRectangleBorder(
-                side: BorderSide(color: AppColors.primary),
+                side: BorderSide(
+                  color: widget.number == 1
+                      ? AppColors.primaryShade
+                      : AppColors.primary,
+                ),
                 borderRadius: BorderRadius.circular(20.sp),
               ),
               backgroundColor: Colors.transparent),
           child: Icon(
             Icons.remove,
-            color: AppColors.primary,
-            size: 26.sp,
+            color:
+                widget.number == 1 ? AppColors.primaryShade : AppColors.primary,
+            size: 17.sp,
           ),
         ),
         10.horizontalSpace,
         TextUtils(
           fontSize: 16.sp,
           fontWeight: FontWeight.w500,
-          text: '1',
+          text: widget.number.toString(),
         ),
         10.horizontalSpace,
         ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            if (widget.number == 4) return;
+            setState(() {
+              widget.number++;
+            });
+          },
           style: ElevatedButton.styleFrom(
-              elevation: 0,
-              minimumSize: Size(35.w, 35.h),
-              shape: RoundedRectangleBorder(
-                side: BorderSide(color: AppColors.primary),
-                borderRadius: BorderRadius.circular(20.sp),
+            elevation: 0,
+            minimumSize: Size(25.w, 34.w),
+            shape: RoundedRectangleBorder(
+              side: BorderSide(
+                color: widget.number == 4
+                    ? AppColors.primaryShade
+                    : AppColors.primary,
               ),
-              backgroundColor: Colors.transparent),
+              borderRadius: BorderRadius.circular(20.sp),
+            ),
+            backgroundColor: Colors.transparent,
+          ),
           child: Icon(
-            Icons.remove,
-            color: AppColors.primary,
-            size: 26.sp,
+            Icons.add,
+            color:
+                widget.number == 4 ? AppColors.primaryShade : AppColors.primary,
+            size: 17.sp,
           ),
         ),
       ],
@@ -474,10 +636,14 @@ class TopOfBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 50.h,
+      height: 52.h,
       width: double.infinity,
       decoration: BoxDecoration(
         color: Colors.white,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(18.sp),
+          topRight: Radius.circular(18.sp),
+        ),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.1),
@@ -487,28 +653,30 @@ class TopOfBottomSheet extends StatelessWidget {
           ),
         ],
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const SizedBox.shrink(),
-          TextUtils(
+      child: Center(
+        child: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          leading: const SizedBox.shrink(),
+          title: TextUtils(
             fontSize: 16.sp,
             fontWeight: FontWeight.w500,
             text: 'Rooms and Guests',
             color: Colors.black,
           ),
-
-          // close icon
-          InkWell(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: const Icon(
-              Icons.close,
-              color: Colors.grey,
-            ),
-          )
-        ],
+          centerTitle: true,
+          actions: [
+            IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: const Icon(
+                Icons.close,
+                color: Colors.black,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
