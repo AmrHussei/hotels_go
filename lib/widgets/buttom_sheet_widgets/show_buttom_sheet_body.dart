@@ -86,7 +86,7 @@ class _ShowButtomSheetBodyState extends State<ShowButtomSheetBody> {
                       12.verticalSpace,
                       CounterRowWithText(text: 'Children', number: childrenNum),
                       12.verticalSpace,
-                      GeneratedTFFWithController(controllers: controllers),
+                      GeneratedTFFWithController(childrenNum: childrenNum),
                     ],
                   ),
                 ),

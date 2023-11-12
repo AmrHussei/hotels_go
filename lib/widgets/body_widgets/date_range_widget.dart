@@ -88,17 +88,9 @@ class _DateRangeWidgetState extends State<DateRangeWidget> {
       builder: (BuildContext context, Widget? child) {
         return Theme(
           data: ThemeData.light().copyWith(
-            primaryTextTheme: const TextTheme(
-                displayMedium: TextStyle(
-              color: Colors.black,
-            )),
             primaryColor: Colors.blue,
             buttonTheme:
                 const ButtonThemeData(textTheme: ButtonTextTheme.primary),
-            textTheme: const TextTheme(
-              bodyLarge:
-                  TextStyle(color: Colors.black), // Change the days' text color
-            ),
             colorScheme: const ColorScheme.light(primary: Colors.blue)
                 .copyWith(secondary: Colors.blue),
           ),
