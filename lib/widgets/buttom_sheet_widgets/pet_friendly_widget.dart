@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hotels_go/widgets/buttom_sheet_widgets/cupertino_switch_widget.dart';
 
-import '../../core/utils/app_colors.dart';
 import '../../core/widgets/text_utils.dart';
 
 class PetFriendlyWidget extends StatefulWidget {
@@ -13,7 +12,6 @@ class PetFriendlyWidget extends StatefulWidget {
 }
 
 class _PetFriendlyWidgetState extends State<PetFriendlyWidget> {
-  bool switchValue = false;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -62,59 +60,7 @@ class _PetFriendlyWidgetState extends State<PetFriendlyWidget> {
               ],
             ),
             const Spacer(),
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                CupertinoSwitch(
-                  value: switchValue,
-                  activeColor: AppColors.primary,
-                  onChanged: (value) {
-                    setState(() {
-                      switchValue = value;
-                    });
-                    // Add your logic for handling switch state changes.
-                  },
-                ),
-                if (!switchValue)
-                  Positioned(
-                    right: 8.w,
-                    child: InkWell(
-                      onTap: () {
-                        setState(() {
-                          switchValue = !switchValue;
-                        });
-                      },
-                      child: Container(
-                        width: 10.w,
-                        height: 10.w,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border(
-                            top: BorderSide(
-                              width: 1.w,
-                              color: Colors.grey,
-                            ),
-                            bottom: BorderSide(
-                              width: 1.w,
-                              color: Colors.grey,
-                            ),
-                            left: BorderSide(
-                              width: 1.w,
-                              color: Colors.grey,
-                            ),
-                            right: BorderSide(
-                              width: 1.w,
-                              color: Colors.grey,
-                            ),
-                          ),
-                          color: Colors
-                              .transparent, // Customize the color of the circle
-                        ),
-                      ),
-                    ),
-                  ),
-              ],
-            ),
+            const CupertinoSwitchWidget()
           ],
         ),
       ),
