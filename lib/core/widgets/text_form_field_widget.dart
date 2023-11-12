@@ -24,7 +24,6 @@ class TextFormFieldWidget extends StatelessWidget {
     this.errorWidget,
     this.inputFormatters,
     this.textColor,
-    required this.onChanged,
     this.hintStyle,
   });
   final TextEditingController? controller;
@@ -46,12 +45,10 @@ class TextFormFieldWidget extends StatelessWidget {
   final void Function(String)? onFieldSubmitted;
   final Widget? errorWidget;
   final List<TextInputFormatter>? inputFormatters;
-  final Function onChanged;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      onChanged: (value) => onChanged(value),
       style: TextStyle(
         color: AppColors.primary,
         fontSize: 16.sp,
@@ -84,6 +81,12 @@ class TextFormFieldWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(18.0),
         ),
         enabledBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: Colors.transparent),
+          borderRadius: BorderRadius.circular(
+            18.sp,
+          ),
+        ),
+        disabledBorder: OutlineInputBorder(
           borderSide: const BorderSide(color: Colors.transparent),
           borderRadius: BorderRadius.circular(
             18.sp,
