@@ -53,11 +53,29 @@ class _CenterContentWidgetState extends State<CenterContentWidget> {
                         child: Column(
                           children: [
                             14.verticalSpace,
-                            TextFormFieldWidget(
-                              controller: selectCityController,
-                              fillColor: Colors.white,
-                              filled: true,
-                              hint: 'Select City',
+                            Container(
+                              padding: EdgeInsets.symmetric(horizontal: 5.w),
+                              height: 45.h,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(18.sp),
+                              ),
+                              alignment: AlignmentDirectional.center,
+                              child: Container(
+                                height: 35.h,
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(18.sp),
+                                ),
+                                child: TextFormFieldWidget(
+                                  controller: selectCityController,
+                                  fillColor: Colors.white,
+                                  filled: true,
+                                  hint: 'Select City',
+                                ),
+                              ),
                             ),
                             10.verticalSpace,
                             const DateRangeWidget(),
